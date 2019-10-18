@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    //public static bool isFullScreen;
+    public static bool isFullScreen;
     //public ScreenFader screenFader;
     //public Slider valueMusic;
     //public Slider valueSound;
@@ -28,7 +28,7 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-    /*
+    
     public void FullScreenToggle()
     {
         isFullScreen = !isFullScreen;
@@ -39,9 +39,10 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1f;
         isFullScreen = Screen.fullScreen;
-        screenFader.fadeState = ScreenFader.FadeState.Out;
+        //screenFader.fadeState = ScreenFader.FadeState.Out;
     }
 
+    /*
     void Update()
     {
         volumeMusic = valueMusic.value;
