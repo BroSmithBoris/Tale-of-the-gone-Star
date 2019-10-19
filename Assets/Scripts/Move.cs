@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class Move : MonoBehaviour
 {
     KeyCode left = KeyCode.A;
@@ -10,12 +10,12 @@ public class Move : MonoBehaviour
     KeyCode jump = KeyCode.Space;
 
     public float speed, jumpForce;
-    public LayerMask groundLayers;
+    public int jumpsNumber;
 
     Rigidbody characterRigidbody;
     bool isGrounded;
     Vector3 movement;
-
+    int jumpsCount;
     void Start()
     {
         characterRigidbody = GetComponent<Rigidbody>();
@@ -23,10 +23,24 @@ public class Move : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == ("Ground"))
+        var tag = collision.gameObject.tag;
+
+        switch (tag)
         {
-            isGrounded = true;
-        }
+            case "Ground":
+                {
+                    isGrounded = true;
+                    jumpsCount = jumpsNumber;
+                    break;
+                }
+
+            case "Wall":
+                {
+                    isGrounded = true;
+                    jumpsCount = 1;
+                    break;
+                }
+        }    
     }
 
     void Update()
@@ -47,9 +61,10 @@ public class Move : MonoBehaviour
 
     void CharacterJump(Vector3 direction)
     {
-        if (isGrounded && Input.GetKeyDown(jump))
+        if ((isGrounded  || jumpsCount > 0) && Input.GetKeyDown(jump))
         {
             characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpsCount--;
             isGrounded = false;
         }
     }
