@@ -10,37 +10,19 @@ public class Move : MonoBehaviour
     KeyCode jump = KeyCode.Space;
 
     public float speed, jumpForce;
-    public int jumpsNumber;
 
     Rigidbody characterRigidbody;
     bool isGrounded;
     Vector3 movement;
-    int jumpsCount;
     void Start()
     {
         characterRigidbody = GetComponent<Rigidbody>();
     }
-
     void OnCollisionEnter(Collision collision)
     {
         var tag = collision.gameObject.tag;
-
-        switch (tag)
-        {
-            case "Ground":
-                {
-                    isGrounded = true;
-                    jumpsCount = jumpsNumber;
-                    break;
-                }
-
-            case "Wall":
-                {
-                    isGrounded = true;
-                    jumpsCount = 1;
-                    break;
-                }
-        }    
+        if (tag == "Ground")
+            isGrounded = true;
     }
 
     void Update()
@@ -61,16 +43,16 @@ public class Move : MonoBehaviour
 
     void CharacterJump(Vector3 direction)
     {
-        if ((isGrounded  || jumpsCount > 0) && Input.GetKeyDown(jump))
+        if (isGrounded && Input.GetKeyDown(jump))
         {
+            characterRigidbody.velocity = new Vector3(0, 0, 0);
             characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            jumpsCount--;
             isGrounded = false;
         }
     }
 
     void CharacterMove(Vector3 direction)
     {
-        characterRigidbody.MovePosition((Vector3)transform.position + (direction * speed * Time.deltaTime));
+        characterRigidbody.MovePosition(transform.position + (direction * speed * Time.deltaTime));
     }
 }
