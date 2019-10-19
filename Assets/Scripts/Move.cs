@@ -2,47 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Move : MonoBehaviour
 {
-    //KeyCode up = KeyCode.W;
-    //KeyCode down = KeyCode.S;
+    #region
     KeyCode left = KeyCode.A;
     KeyCode right = KeyCode.D;
-    public float speed;
-    public float gravity = 20.0f;
-    //Animator anim;
+    KeyCode jump = KeyCode.Space;
 
+    public float speed, speedLimit, jumpForce;
+    public LayerMask groundLayers;
 
-    Vector3 moveDirection = Vector3.zero;
-    CharacterController controller;
+    SphereCollider characterCollider;
+    Rigidbody characterRigidbody;
+    bool isGrounded;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-        //anim = GetComponent<Animator>();
+        characterCollider = GetComponent<SphereCollider>();
+        characterRigidbody = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
-            //int x;
-            int x;
+        if (collision.gameObject.tag == ("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
 
+    void FixedUpdate()
+    {
+        int x = 0;
+        if (characterRigidbody.velocity.x < speedLimit)
             if (Input.GetKey(right))
                 x = 1;
-            else if (Input.GetKey(left))
+        else if (characterRigidbody.velocity.x > -speedLimit)
+            if (Input.GetKey(left))
                 x = -1;
-            else
-                x = 0;
 
-            moveDirection = new Vector3(x, 0, 0);
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection = moveDirection * speed;
+            Vector3 movement = new Vector3(x, 0, 0);
 
-            //if (Input.GetKey(up) || Input.GetKey(down) || Input.GetKey(left) || Input.GetKey(right))
-            //    anim.SetBool("walk", true);
-            //else
-            //    anim.SetBool("walk", false);
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
+            characterRigidbody.AddForce(movement * speed, ForceMode.Impulse);
+        
+
+        if (isGrounded && Input.GetKeyDown(jump))
+        {
+            characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
     }
+    #endregion
+
+
 }
