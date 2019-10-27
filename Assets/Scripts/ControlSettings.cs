@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using System.Linq;
+using System;
 
 public class ControlSettings : MonoBehaviour
 {
-    public Text text;
+    Text text;
     bool visible;
-    bool visible1;
+    int index;
+    string[] textControls = { "Move left - ", "Move right - ", "Jump - " };
+    KeyCode[] controls = { Move.left, Move.right, Move.jump };
+
 
     public void ButtonClick()
     {
         visible = true;
     }
 
-    public void ButtonClick1()
-    {
-        visible1 = true;
-    }
 
     void OnGUI()
     {
@@ -28,9 +29,9 @@ public class ControlSettings : MonoBehaviour
 
             if (Event.current.keyCode != KeyCode.Escape && Event.current.keyCode != KeyCode.None)
             {
-                Move.left = Event.current.keyCode;
+                controls[index] = Event.current.keyCode;
                 visible = false;
-                text.text = "Move left - " + Move.left.ToString();
+                text.text = textControls[index] + controls[index].ToString();
             }
 
             if (Event.current.keyCode == KeyCode.Escape) visible = false;
