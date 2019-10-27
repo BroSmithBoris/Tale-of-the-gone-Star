@@ -2,54 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Move : MonoBehaviour
-{ 
+{
     public static KeyCode left = KeyCode.A;
     public static KeyCode right = KeyCode.D;
     public static KeyCode jump = KeyCode.Space;
+    
+    public float speed, jumpForce;
 
-    public float speed, speedLimit, jumpForce;
-    public LayerMask groundLayers;
-
-    SphereCollider characterCollider;
     Rigidbody characterRigidbody;
     bool isGrounded;
-
+    Vector3 movement;
     void Start()
     {
-        characterCollider = GetComponent<SphereCollider>();
         characterRigidbody = GetComponent<Rigidbody>();
     }
-
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == ("Ground"))
-        {
+        var tag = collision.gameObject.tag;
+        if (tag == "Ground")
             isGrounded = true;
-        }
+    }
+
+    void Update()
+    {
+        int x = 0;
+        if (Input.GetKey(right))
+            x = 1;
+        else if (Input.GetKey(left))
+            x = -1;
+        movement = new Vector3(x, 0, 0);
     }
 
     void FixedUpdate()
     {
-        int x = 0;
-        if (characterRigidbody.velocity.x < speedLimit)
-            if (Input.GetKey(right))
-                x = 1;
-            else if (characterRigidbody.velocity.x > -speedLimit)
-                if (Input.GetKey(left))
-                    x = -1;
+        CharacterJump(movement);
+        CharacterMove(movement);
+    }
 
-        Vector3 movement = new Vector3(x, 0, 0);
-
-        characterRigidbody.AddForce(movement * speed, ForceMode.Impulse);
-
-
+    void CharacterJump(Vector3 direction)
+    {
         if (isGrounded && Input.GetKeyDown(jump))
         {
+            characterRigidbody.velocity = new Vector3(0, 0, 0);
             characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
     }
 
+    void CharacterMove(Vector3 direction)
+    {
+        characterRigidbody.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+    }
 }
