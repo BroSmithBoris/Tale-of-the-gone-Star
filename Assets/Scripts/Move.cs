@@ -4,11 +4,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Move : MonoBehaviour
-{
-    #region
-    KeyCode left = KeyCode.A;
-    KeyCode right = KeyCode.D;
-    KeyCode jump = KeyCode.Space;
+{ 
+    public static KeyCode left = KeyCode.A;
+    public static KeyCode right = KeyCode.D;
+    public static KeyCode jump = KeyCode.Space;
 
     public float speed, speedLimit, jumpForce;
     public LayerMask groundLayers;
@@ -37,14 +36,14 @@ public class Move : MonoBehaviour
         if (characterRigidbody.velocity.x < speedLimit)
             if (Input.GetKey(right))
                 x = 1;
-        else if (characterRigidbody.velocity.x > -speedLimit)
-            if (Input.GetKey(left))
-                x = -1;
+            else if (characterRigidbody.velocity.x > -speedLimit)
+                if (Input.GetKey(left))
+                    x = -1;
 
-            Vector3 movement = new Vector3(x, 0, 0);
+        Vector3 movement = new Vector3(x, 0, 0);
 
-            characterRigidbody.AddForce(movement * speed, ForceMode.Impulse);
-        
+        characterRigidbody.AddForce(movement * speed, ForceMode.Impulse);
+
 
         if (isGrounded && Input.GetKeyDown(jump))
         {
@@ -52,7 +51,5 @@ public class Move : MonoBehaviour
             isGrounded = false;
         }
     }
-    #endregion
-
 
 }
