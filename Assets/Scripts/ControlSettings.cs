@@ -11,8 +11,6 @@ public class ControlSettings : MonoBehaviour
     public Text[] text = new Text[3];
     bool visible;
     int index;
-    KeyCode[] controls = { Move.left, Move.right, Move.jump };
-
 
     public void ButtonClick(int i)
     {
@@ -29,9 +27,23 @@ public class ControlSettings : MonoBehaviour
 
             if (Event.current.keyCode != KeyCode.Escape && Event.current.keyCode != KeyCode.None)
             {
-                controls[index] = Event.current.keyCode;
+                switch (index)
+                {
+                    case 0:
+                        Move.left = Event.current.keyCode;
+                        text[0].text = Move.left.ToString();
+                        break;
+                    case 1:
+                        Move.right = Event.current.keyCode;
+                        text[1].text = Move.right.ToString();
+                        break;
+                    case 2:
+                        Move.jump = Event.current.keyCode;
+                        text[2].text = Move.jump.ToString();
+                        break;
+
+                }
                 visible = false;
-                text[index].text = controls[index].ToString();
             }
 
             if (Event.current.keyCode == KeyCode.Escape) visible = false;
