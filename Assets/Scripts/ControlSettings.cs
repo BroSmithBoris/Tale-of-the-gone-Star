@@ -8,16 +8,16 @@ using System;
 
 public class ControlSettings : MonoBehaviour
 {
-    Text text;
+    public Text[] text = new Text[3];
     bool visible;
     int index;
-    string[] textControls = { "Move left - ", "Move right - ", "Jump - " };
     KeyCode[] controls = { Move.left, Move.right, Move.jump };
 
 
-    public void ButtonClick()
+    public void ButtonClick(int i)
     {
         visible = true;
+        index = i;
     }
 
 
@@ -31,7 +31,7 @@ public class ControlSettings : MonoBehaviour
             {
                 controls[index] = Event.current.keyCode;
                 visible = false;
-                text.text = textControls[index] + controls[index].ToString();
+                text[index].text = controls[index].ToString();
             }
 
             if (Event.current.keyCode == KeyCode.Escape) visible = false;
