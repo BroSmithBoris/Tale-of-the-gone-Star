@@ -20,7 +20,7 @@ public class Menu : MonoBehaviour
 
     void LoadScene()
     {
-        SceneManager.LoadScene("Concept_level", LoadSceneMode.Single);
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     public void ExitPressed()
