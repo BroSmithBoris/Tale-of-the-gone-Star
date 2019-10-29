@@ -1340,11 +1340,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPause: 0
-  textOfSave:
-  - Save 1
-  - Save 2
-  - Save 3
-  - Save 4
+  player: {fileID: 1832559603}
+  x: 0
+  y: 0
+  z: 0
 --- !u!54 &1832559610
 Rigidbody:
   m_ObjectHideFlags: 0

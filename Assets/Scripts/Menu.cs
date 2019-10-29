@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class Menu : MonoBehaviour
 {
+    int saveScene = 0;
+
     public static bool isFullScreen;
     //public ScreenFader screenFader;
     //public Slider valueMusic;
@@ -20,7 +23,7 @@ public class Menu : MonoBehaviour
 
     void LoadScene()
     {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        SceneManager.LoadScene(saveScene, LoadSceneMode.Single);
     }
 
     public void ExitPressed()
@@ -39,6 +42,11 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1f;
         isFullScreen = Screen.fullScreen;
+        StreamReader sr = new StreamReader("Position.txt");
+        if (sr != null)
+        {
+            saveScene = System.Convert.ToInt32(sr.ReadLine());
+        }
         //screenFader.fadeState = ScreenFader.FadeState.Out;
     }
 

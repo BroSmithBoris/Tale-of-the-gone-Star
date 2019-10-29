@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,7 +12,11 @@ public class PauseMenu : MonoBehaviour
     float w = Screen.width;
     float buttonWidth = 150f;
     float buttonHeight = 45f;
-    public string[] textOfSave = new string[4];
+    public GameObject player;
+
+    [HideInInspector] public float x;
+    [HideInInspector] public float y;
+    [HideInInspector] public float z;
 
     void Update()
     {
@@ -40,8 +45,8 @@ public class PauseMenu : MonoBehaviour
             switch (menuType)
             {
                 case 0: drawMainMenu(); break;
-                case 1: drawSaveMenu(); break;
-                case 2: drawLoadMenu(); break;
+                case 1: break;
+                case 2: break;
             }
         }
         else Cursor.visible = false;
@@ -51,16 +56,34 @@ public class PauseMenu : MonoBehaviour
     {
         if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 150f, buttonWidth, buttonHeight), "Resume"))
         {
-            isPause = false;
             Cursor.visible = false;
+            isPause = false;
         }
         if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 100f, buttonWidth, buttonHeight), "Save"))
         {
-            menuType = 1;
+            StreamWriter sw = new StreamWriter("Position.txt");
+            sw.WriteLine(player.transform.position.x);
+            sw.WriteLine(player.transform.position.y);
+            sw.WriteLine(player.transform.position.z);
+            sw.Close();
         }
         if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 50f, buttonWidth, buttonHeight), "Load"))
         {
-            menuType = 2;
+            StreamReader sr = new StreamReader("Position.txt");
+            if (sr != null)
+            {
+                while (!sr.EndOfStream)
+                {
+                    x = System.Convert.ToSingle(sr.ReadLine());
+                    y = System.Convert.ToSingle(sr.ReadLine());
+                    z = System.Convert.ToSingle(sr.ReadLine());
+                }
+                if (x != 0 && y != 0 && z != 0)
+                    player.transform.position = new Vector3(x, y, z);
+
+                Cursor.visible = false;
+                isPause = false;
+            }
         }
         if (GUI.Button(new Rect((w / 2) - 75f, (h / 2), buttonWidth, buttonHeight), "Back to Menu"))
         {
@@ -70,38 +93,6 @@ public class PauseMenu : MonoBehaviour
         {
             isPause = false;
             Application.Quit();
-        }
-    }
-
-    void drawSaveMenu()
-    {
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 150f, buttonWidth, buttonHeight), textOfSave[0]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 100f, buttonWidth, buttonHeight), textOfSave[1]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 50f, buttonWidth, buttonHeight), textOfSave[2]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2), buttonWidth, buttonHeight), textOfSave[3]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) + 50f, buttonWidth, buttonHeight), "Back"))
-        {
-            menuType = 0;
-        }
-    }
-
-    void drawLoadMenu()
-    {
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 150f, buttonWidth, buttonHeight), textOfSave[0]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 100f, buttonWidth, buttonHeight), textOfSave[1]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) - 50f, buttonWidth, buttonHeight), textOfSave[2]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2), buttonWidth, buttonHeight), textOfSave[3]))
-        { }
-        if (GUI.Button(new Rect((w / 2) - 75f, (h / 2) + 50f, buttonWidth, buttonHeight), "Back"))
-        {
-            menuType = 0;
         }
     }
 }
