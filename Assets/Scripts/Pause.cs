@@ -8,6 +8,7 @@ public class Pause : MonoBehaviour
 {
     public GameObject player;
     public GameObject menu;
+
     float timer;
     [HideInInspector] public bool isPause;
 
@@ -15,7 +16,14 @@ public class Pause : MonoBehaviour
     [HideInInspector] public float y;
     [HideInInspector] public float z;
 
-    // Update is called once per frame
+    void Start()
+    {
+        StreamReader sr = new StreamReader("Save.txt");
+        var save = System.Convert.ToInt32(sr.ReadLine());
+        if (save == 1)
+            LoadPressed();
+    }
+
     void Update()
     {
         Time.timeScale = timer;
