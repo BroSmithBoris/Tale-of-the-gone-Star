@@ -11,24 +11,17 @@ public class Move : MonoBehaviour
     public float speed, jumpForce;
 
     Rigidbody characterRigidbody;
-    public bool isGrounded;
+    bool isGrounded;
     Vector3 movement;
-
     void Start()
     {
         characterRigidbody = GetComponent<Rigidbody>();
     }
-
-    void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         var tag = collision.gameObject.tag;
         if (tag == "Ground")
             isGrounded = true;
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        isGrounded = false;
     }
 
     void Update()
@@ -49,7 +42,7 @@ public class Move : MonoBehaviour
 
     void CharacterJump(Vector3 direction)
     {
-        if (isGrounded && Input.GetKey(jump) )
+        if (isGrounded && Input.GetKeyDown(jump))
         {
             characterRigidbody.velocity = new Vector3(0, 0, 0);
             characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
