@@ -1310,7 +1310,10 @@ GameObject:
   - component: {fileID: 1832559610}
   - component: {fileID: 1832559608}
   - component: {fileID: 1832559609}
+<<<<<<< HEAD
   - component: {fileID: 1832559604}
+=======
+>>>>>>> parent of 2a0f98c... Добавил загрузку сохранения в главном меню, побаловался с скриптами сохранения
   m_Layer: 0
   m_Name: lower
   m_TagString: Untagged
@@ -1407,7 +1410,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 70
+<<<<<<< HEAD
   isGrounded: 0
+=======
+>>>>>>> parent of 2a0f98c... Добавил загрузку сохранения в главном меню, побаловался с скриптами сохранения
 --- !u!114 &1832559609
 MonoBehaviour:
   m_ObjectHideFlags: 0
