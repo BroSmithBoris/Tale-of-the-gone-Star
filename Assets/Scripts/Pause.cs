@@ -59,7 +59,6 @@ public class Pause : MonoBehaviour
                 y = System.Convert.ToSingle(sr.ReadLine());
                 z = System.Convert.ToSingle(sr.ReadLine());
             }
-            sr.Close();
             if (x != 0 && y != 0 && z != 0)
                 player.transform.position = new Vector3(x, y, z);
             ResumePressed();
