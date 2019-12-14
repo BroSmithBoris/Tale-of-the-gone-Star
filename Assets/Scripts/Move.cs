@@ -7,28 +7,16 @@ public class Move : MonoBehaviour
     public static KeyCode left = KeyCode.A;
     public static KeyCode right = KeyCode.D;
     public static KeyCode jump = KeyCode.Space;
-    
+
     public float speed, jumpForce;
 
-    Rigidbody characterRigidbody;
     bool isGrounded;
+    Rigidbody characterRigidbody;
     Vector3 movement;
 
     void Start()
     {
         characterRigidbody = GetComponent<Rigidbody>();
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
-        var tag = collision.gameObject.tag;
-        if (tag == "Ground")
-            isGrounded = true;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        isGrounded = false;
     }
 
     void Update()
@@ -45,6 +33,18 @@ public class Move : MonoBehaviour
     {
         CharacterJump(movement);
         CharacterMove(movement);
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        var tag = collision.gameObject.tag;
+        if (tag == "Ground")
+            isGrounded = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isGrounded = false;
     }
 
     void CharacterJump(Vector3 direction)
