@@ -25,6 +25,7 @@ ExportedObj/
 *.booproj
 *.svd
 /.vs/
+/obj/
  
 # Builds
 *.apk

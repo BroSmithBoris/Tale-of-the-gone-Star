@@ -265,3 +265,7 @@ C:\Users\Олег\Рабочий стол\Tale-of-the-gone-Star\Tale-of-the-gone
 C:\Users\Олег\Рабочий стол\Tale-of-the-gone-Star\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\Олег\Рабочий стол\Tale-of-the-gone-Star\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.dll
 C:\Users\Олег\Рабочий стол\Tale-of-the-gone-Star\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.pdb
+D:\Users\fathe\Documents\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+D:\Users\fathe\Documents\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+D:\Users\fathe\Documents\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.dll
+D:\Users\fathe\Documents\Tale-of-the-gone-Star\obj\Debug\Assembly-CSharp.pdb
