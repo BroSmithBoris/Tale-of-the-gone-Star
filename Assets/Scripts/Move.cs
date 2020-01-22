@@ -8,15 +8,18 @@ public class Move : MonoBehaviour
     public static KeyCode right = KeyCode.D;
     public static KeyCode jump = KeyCode.Space;
 
-    public float speed, jumpForce;
+    public bool IsGrounded;
+    public Rigidbody CharacterRigidbody;
 
-    bool isGrounded;
-    Rigidbody characterRigidbody;
+    LedgeGrab ledgeGrab;
+    public float speed, jumpForce;
     Vector3 movement;
+    Vector3 trajectory;
 
     void Start()
     {
-        characterRigidbody = GetComponent<Rigidbody>();
+        CharacterRigidbody = GetComponent<Rigidbody>();
+        ledgeGrab = GetComponent<LedgeGrab>();
     }
 
     void Update()
@@ -39,26 +42,31 @@ public class Move : MonoBehaviour
     {
         var tag = collision.gameObject.tag;
         if (tag == "Ground")
-            isGrounded = true;
+            IsGrounded = true;
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        isGrounded = false;
+        IsGrounded = false;
     }
 
     void CharacterJump(Vector3 direction)
     {
-        if (isGrounded && Input.GetKey(jump))
+        bool freezePlayer = CharacterRigidbody.constraints is RigidbodyConstraints.FreezeAll;
+        if ((IsGrounded || freezePlayer) && Input.GetKey(jump))
         {
-            characterRigidbody.velocity = new Vector3(0, 0, 0);
-            characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
+            CharacterRigidbody.constraints = (RigidbodyConstraints)120;
+            ledgeGrab.canGrub = true;
+            CharacterRigidbody.velocity = new Vector3(0, 0, 0);
+            if (freezePlayer)
+                CharacterRigidbody.MovePosition(transform.position + (new Vector3(-5, 0, 0) * speed * Time.deltaTime));
+            CharacterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            IsGrounded = false;
         }
     }
 
     void CharacterMove(Vector3 direction)
     {
-        characterRigidbody.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+        CharacterRigidbody.MovePosition(transform.position + (direction * speed * Time.deltaTime));
     }
 }

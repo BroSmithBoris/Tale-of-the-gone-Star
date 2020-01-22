@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ControlSettings.cs" />
     <Compile Include="Assets\Scripts\GraphicSettings.cs" />
+    <Compile Include="Assets\Scripts\LedgeGrab.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\Move.cs" />
     <Compile Include="Assets\Scripts\Pause.cs" />
