@@ -7,12 +7,14 @@ public class Move : MonoBehaviour
     public static KeyCode left = KeyCode.A;
     public static KeyCode right = KeyCode.D;
     public static KeyCode jump = KeyCode.Space;
+    public static KeyCode attack = KeyCode.Mouse0;
 
     public float speed, jumpForce;
     Animator anim;
     bool isGrounded;
     Rigidbody characterRigidbody;
     Vector3 movement;
+    public Goblin goblin;
 
     void Start()
     {
@@ -32,6 +34,10 @@ public class Move : MonoBehaviour
             anim.SetBool("walk", true);
         else
             anim.SetBool("walk", false);
+        if (Input.GetKey(attack))
+            anim.SetBool("attack", true);
+        else
+            anim.SetBool("attack", false);
     }
 
     void FixedUpdate()
@@ -54,6 +60,15 @@ public class Move : MonoBehaviour
     {
         isGrounded = false;
         //anim.SetBool("jump", true);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var tag = other.gameObject.tag;
+        if (tag == "Player_attack")
+        {
+            goblin.playerAttack = true;
+        }
     }
 
     void CharacterJump(Vector3 direction)
