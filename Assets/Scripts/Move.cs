@@ -9,7 +9,7 @@ public class Move : MonoBehaviour
     public static KeyCode jump = KeyCode.Space;
 
     public float speed, jumpForce;
-
+    Animator anim;
     bool isGrounded;
     Rigidbody characterRigidbody;
     Vector3 movement;
@@ -17,6 +17,7 @@ public class Move : MonoBehaviour
     void Start()
     {
         characterRigidbody = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -26,7 +27,11 @@ public class Move : MonoBehaviour
             x = 1;
         else if (Input.GetKey(left))
             x = -1;
-        movement = new Vector3(x, 0, 0);
+        movement = new Vector3(0, 0, x);
+        if (Input.GetKey(left) || Input.GetKey(right))
+            anim.SetBool("walk", true);
+        else
+            anim.SetBool("walk", false);
     }
 
     void FixedUpdate()
@@ -39,12 +44,16 @@ public class Move : MonoBehaviour
     {
         var tag = collision.gameObject.tag;
         if (tag == "Ground")
+        {
+            anim.SetBool("jump", false);
             isGrounded = true;
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         isGrounded = false;
+        //anim.SetBool("jump", true);
     }
 
     void CharacterJump(Vector3 direction)
@@ -53,6 +62,7 @@ public class Move : MonoBehaviour
         {
             characterRigidbody.velocity = new Vector3(0, 0, 0);
             characterRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            anim.SetBool("jump", true);
             isGrounded = false;
         }
     }
