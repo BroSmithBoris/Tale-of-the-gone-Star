@@ -12358,7 +12358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 18
-  jumpForce: 7
+  jumpForce: 12
   goblin: {fileID: 578583016}
 --- !u!4 &887863942 stripped
 Transform:
