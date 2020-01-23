@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Goblin : MonoBehaviour
 {
@@ -40,7 +41,9 @@ public class Goblin : MonoBehaviour
             anim.Play("run");
         }
         else if (concernsPlayer && !death)
+        {          
             anim.Play("attack1");
+        }
         else if (!death)
             anim.Play("idle");
         if (Input.GetKey(KeyCode.Mouse0))

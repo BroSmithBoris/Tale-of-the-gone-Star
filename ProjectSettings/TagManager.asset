@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Wall
   - Player_attack
+  - Goblin
   layers:
   - Default
   - TransparentFX
