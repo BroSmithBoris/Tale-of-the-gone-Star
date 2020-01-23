@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Goblin : MonoBehaviour
 {
-    public bool playerAttack, concernsPlayer, death;
+    public static bool playerAttack;
+    public bool concernsPlayer, death;
     public float speed, jumpForce;
     public Animation anim;
     public AnimationClip animClip;
     Rigidbody characterRigidbody;
+    Collider goblinCollider;
     Vector3 movement;
 
     void Start()
     {
         characterRigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animation>();
+        goblinCollider = GetComponent<Collider>();
     }
 
     private void OnTriggerStay(Collider other)
@@ -43,10 +46,13 @@ public class Goblin : MonoBehaviour
             anim.Play("attack1");
         else if (!death)
             anim.Play("idle");
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && concernsPlayer)
         {
             death = true;
+            gameObject.GetComponent<Collider>();
             anim.Play("death");
+            goblinCollider.enabled = false;
+            characterRigidbody.useGravity = false;
         }
         movement = new Vector3(0, 0, x);
     }
