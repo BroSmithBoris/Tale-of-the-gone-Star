@@ -14,7 +14,6 @@ public class Move : MonoBehaviour
     bool isGrounded;
     Rigidbody characterRigidbody;
     Vector3 movement;
-    public Goblin goblin;
 
     void Start()
     {
@@ -67,7 +66,8 @@ public class Move : MonoBehaviour
         var tag = other.gameObject.tag;
         if (tag == "Player_attack")
         {
-            goblin.playerAttack = true;
+            Goblin.playerAttack = true;
+            Skeleton.playerAttack = true;
         }
     }
 
