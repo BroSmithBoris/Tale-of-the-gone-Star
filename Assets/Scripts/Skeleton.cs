@@ -45,6 +45,7 @@ public class Skeleton : MonoBehaviour
         {
             anim.SetBool("walk", false);
             anim.SetBool("attack", true);
+            anim.SetBool("attack", false);
         }
         else if (!death)
             anim.SetBool("walk", false);
