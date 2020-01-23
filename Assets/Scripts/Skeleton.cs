@@ -49,7 +49,7 @@ public class Skeleton : MonoBehaviour
         }
         else if (!death)
             anim.SetBool("walk", false);
-        if (Input.GetKey(KeyCode.Mouse0) && concernsPlayer)
+        if (Input.GetKey(KeyCode.Mouse1) && concernsPlayer)
         {
             anim.SetBool("attack", false);
             death = true;

@@ -49,7 +49,7 @@ public class Goblin : MonoBehaviour
         }
         else if (!death)
             anim.Play("idle");
-        if (Input.GetKey(KeyCode.Mouse0) && concernsPlayer)
+        if (Input.GetKey(KeyCode.Mouse1) && concernsPlayer)
         {
             death = true;
             gameObject.GetComponent<Collider>();

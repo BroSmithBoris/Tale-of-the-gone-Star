@@ -11,6 +11,5 @@ public class Attack : MonoBehaviour
         var tag = other.gameObject.tag;
         if (tag == "Player")
             slider.value -= 20f;
-
     }
 }
